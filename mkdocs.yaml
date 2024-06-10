@@ -1,0 +1,17 @@
+# -------------------------------------------------
+# DO NOT EDIT THIS
+# doc site and hosting specifics
+site_name: demo01-poi-backend-docs
+site_description: Creates a NestJS Service together with a PostgreSQL database
+docs_dir: docs
+repo_url: https:////rhdh-book1-templates
+edit_uri: edit/main/docs
+plugins:
+  - techdocs-core
+# -------------------------------------------------
+
+# -------------------------------------------------
+# CONTENT RELATED -> CHANGE AS NEEDED :)
+nav:
+  - Overview: index.md
+# -------------------------------------------------

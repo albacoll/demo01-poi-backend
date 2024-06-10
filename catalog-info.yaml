@@ -1,0 +1,76 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: demo01-poi-backend
+  description: 'The NestJS service plus PostgreSQL databaes for demo01-poi-backend (Creates a NestJS Service together with a PostgreSQL database)'
+  annotations:
+    argocd/app-name: demo01-poi-backend-dev
+    backstage.io/kubernetes-id: demo01-poi-backend
+    backstage.io/kubernetes-namespace: demo01
+    backstage.io/techdocs-ref: dir:.
+    gitlab.com/project-slug: /rhdh-book1-templates
+    janus-idp.io/tekton : demo01-poi-backend
+  tags:
+    - nodejs
+    - nestjs
+    - book
+    - example
+  links:
+    - url: https://console-openshift-console.apps.sandbox-m4.g2pi.p1.openshiftapps.com/dev-pipelines/ns/demo01/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.sandbox-m4.g2pi.p1.openshiftapps.com/k8s/ns/demo01/deployments/demo01-poi-backend
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.sandbox-m4.g2pi.p1.openshiftapps.com/#https:////rhdh-book1-templates?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "albacoll"
+  system: idp-system-demo01
+  providesApis:
+    - demo01-poi-backend-api
+  dependsOn: 
+    - resource:default/demo01-poi-backend-db
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: idp-system-demo01
+  tags:
+    - rhdh
+    - book
+spec:
+  owner: "albacoll"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: demo01-poi-backend-api
+  description: API surface exposed by the NestJS service
+  links:
+    - url: https://demo01-poi-backend-demo01.apps.sandbox-m4.g2pi.p1.openshiftapps.com/swagger
+      title: Swagger UI
+      icon: web
+    - url: https:////rhdh-book1-templates/-/blob/main/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "albacoll"
+  system: idp-system-demo01
+  definition:
+    $text: ./openapi.yaml
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: demo01-poi-backend-db
+  description: database backing the NestJS service
+spec:
+  type: database
+  owner: "albacoll"
+  system: idp-system-demo01
